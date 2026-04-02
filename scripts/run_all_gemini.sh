@@ -15,7 +15,7 @@ export PYTHONPATH="$PWD:$PYTHONPATH"
 source "$HOME/miniconda3/etc/profile.d/conda.sh" 2>/dev/null && conda activate base 2>/dev/null || true
 
 export BASE_URL="${BASE_URL:-https://generativelanguage.googleapis.com/v1beta/openai}"
-export API_KEY="${GEMINI_API_KEY:-AIzaSyBKclGf3tRvHEC9z2PueILdoqx4eOeAo1Y}"
+export API_KEY="${GEMINI_API_KEY:-PUT_YOURS_HERE}"
 export LLM_MODEL="${LLM_MODEL:-gemini-3.1-flash-lite-preview}"
 
 LLM="$LLM_MODEL"
