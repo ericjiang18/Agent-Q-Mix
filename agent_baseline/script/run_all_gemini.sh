@@ -16,7 +16,7 @@ mkdir -p "$RESULTS_DIR"
 
 # ── Override env vars to use Gemini ──────────────────────────────────
 export BASE_URL="https://generativelanguage.googleapis.com/v1beta/openai"
-export API_KEY="${GEMINI_API_KEY:-AIzaSyBKclGf3tRvHEC9z2PueILdoqx4eOeAo1Y}"
+export API_KEY="${GEMINI_API_KEY:-PUT_YOURS_HERE}"
 export LLM_MODEL="${GEMINI_LLM_MODEL:-gemini-3.1-flash-lite-preview}"
 
 echo "================================================================"
