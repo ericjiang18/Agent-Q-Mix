@@ -144,7 +144,8 @@ agent_q_mix/
 ```
 
 
-## If you find this repository helpful, a citation to our paper would be greatly appreciated:
+
+If you find this repository helpful, a citation to our paper would be greatly appreciated:
 
 ```
 @misc{jiang2026agentqmixselectingright,
@@ -157,6 +158,5 @@ agent_q_mix/
       url={https://arxiv.org/abs/2604.00344}, 
 }
 ```
-
 
 
