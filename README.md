@@ -142,3 +142,21 @@ agent_q_mix/
 ├── result*/                 # Evaluation results (JSON + JSONL)
 └── agent_baseline/          # Framework comparison baselines (AutoGen, LangGraph, etc.)
 ```
+
+
+## If you find this repository helpful, a citation to our paper would be greatly appreciated:
+
+```
+@misc{jiang2026agentqmixselectingright,
+      title={Agent Q-Mix: Selecting the Right Action for LLM Multi-Agent Systems through Reinforcement Learning}, 
+      author={Eric Hanchen Jiang and Levina Li and Rui Sun and Xiao Liang and Yubei Li and Yuchen Wu and Haozheng Luo and Hengli Li and Zhi Zhang and Zhaolu Kang and Kai-Wei Chang and Ying Nian Wu},
+      year={2026},
+      eprint={2604.00344},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2604.00344}, 
+}
+```
+
+
+
