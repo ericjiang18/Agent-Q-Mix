@@ -232,19 +232,46 @@ class QMIXGraph:
 
         return final_answers, total_tokens
 
+    def _is_mutual_edge(self, nid_a, nid_b):
+        """Check if two nodes share a bidirectional (mutual) edge."""
+        node_a = self.nodes[nid_a]
+        node_b = self.nodes[nid_b]
+        return node_b in node_a.spatial_successors and node_a in node_b.spatial_successors
+
     async def _execute_round(self, input, max_tries, max_time):
-        """Execute all nodes in topological order."""
-        in_degree = {nid: len(node.spatial_predecessors) for nid, node in self.nodes.items()}
+        """Execute all nodes in topological order.
+
+        Mutual edges (A <-> B) from debate actions are handled by breaking
+        symmetry: the lower-ID node's inbound mutual edge is not counted,
+        allowing it to enter the queue first. Once it executes, its partner's
+        in-degree drops to zero and executes next with access to the first
+        node's output.
+        """
+        in_degree = {}
+        for nid, node in self.nodes.items():
+            count = 0
+            for pred in node.spatial_predecessors:
+                if pred.id in self.nodes and self._is_mutual_edge(nid, pred.id):
+                    if nid < pred.id:
+                        continue
+                count += 1
+            in_degree[nid] = count
+
         queue = [nid for nid, deg in in_degree.items() if deg == 0]
+        executed = set()
 
         while queue:
             current_id = queue.pop(0)
+            if current_id in executed:
+                continue
+
             for attempt in range(max_tries):
                 try:
                     await asyncio.wait_for(
                         self.nodes[current_id].async_execute(input),
                         timeout=max_time,
                     )
+                    executed.add(current_id)
                     break
                 except Exception as e:
                     logger.warning(f"Node {current_id} attempt {attempt + 1} failed: {e}")
@@ -253,7 +280,7 @@ class QMIXGraph:
                 if successor.id not in self.nodes:
                     continue
                 in_degree[successor.id] = in_degree.get(successor.id, 1) - 1
-                if in_degree[successor.id] == 0:
+                if in_degree[successor.id] == 0 and successor.id not in executed:
                     queue.append(successor.id)
 
     def _clear_spatial(self):
